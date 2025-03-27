@@ -14,6 +14,5 @@ app.get('/prompts', (req, res) => {
 
 app.listen (5000, () => {
     connectDB();
-    console.log("Server has started on post 5000");
-    
+    console.log("Server has started on post 5000"); 
 });
