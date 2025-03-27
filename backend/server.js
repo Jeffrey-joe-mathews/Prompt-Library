@@ -9,6 +9,27 @@ dotenv.config();
 const app = express(); // creating an instance of express
 app.use(express.json()); // middleware
 
+app.get('/api/prompts', async(req, res) => {
+    try {
+        const prompts = await Prompt.find({}); // empty object means to fetch all prompts from thwe database
+        res.status(200).json(
+            {
+                "success" : true,
+                "data" : prompts
+            }
+        );
+    }
+    catch (error) {
+        console.error(`error in GET for getting the prompts : ${error.message}`);
+        res.status(400).json(
+            {
+                "success" : false,
+                "message" : "unable to GET prompts"
+            }
+        )
+    }
+})
+
 app.post('/api/prompts', async(req, res) => {
     const item = req.body;
 
@@ -50,6 +71,33 @@ app.post('/api/prompts', async(req, res) => {
 
     }
 }) 
+
+app.put('/api/prompts/:id', async(req, res) => {
+    
+})
+
+app.delete('/api/prompts/:id', async(req, res) => {
+    const {id} = req.params;
+    console.log(`id : ${id}`);
+    try {
+        await Prompt.findByIdAndDelete(id);
+        res.status(200).json(
+            {
+                "success" : true,
+                "message" : "the entity has been deleted successfully",
+            }
+        );
+    }
+    catch (error) {
+        console.error(`deletion error : ${error}`);
+        res.status(404).json(
+            {
+                "success" : false,
+                "message" : "error in deleting the document"
+            }
+        );
+    }
+})
 
 
 app.listen (5000, async () => {
