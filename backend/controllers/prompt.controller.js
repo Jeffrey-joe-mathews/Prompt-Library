@@ -101,6 +101,18 @@ export const updatePrompt = async(req, res) => {
 export const deletePrompt = async(req, res) => {
     const {id} = req.params;
     console.log(`id : ${id}`);
+
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+        console.error("the id is not a valid ID try again with a Valid ID");
+        res.send(404).json(
+            {
+                "success" : false,
+                "message" : "THe ID provided is not a valid ID"
+            }
+        );
+        
+    }
+
     try {
         await Prompt.findByIdAndDelete(id);
         res.status(200).json(
@@ -112,10 +124,10 @@ export const deletePrompt = async(req, res) => {
     }
     catch (error) {
         console.error(`deletion error : ${error}`);
-        res.status(404).json(
+        res.status(500).json(
             {
                 "success" : false,
-                "message" : "error in deleting the document"
+                "message" : "Server error"
             }
         );
     }

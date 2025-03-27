@@ -1,18 +1,21 @@
 import express from 'express';
+const app = express(); // creating an instance of express
+
 import { connectDB } from './config/db.js';
+
 import dotenv from 'dotenv';
+dotenv.config();
 
 import promptRoutes from './routes/prompt.route.js';
 
-dotenv.config();
+const PORT = process.env.PORT || 5000;
 
-const app = express(); // creating an instance of express
 app.use(express.json()); // middleware
 
 app.use('/api/prompts', promptRoutes)
 
 
-app.listen (5000, async () => {
+app.listen (PORT, async () => {
     await connectDB();
-    console.log("Server has started on post 5000"); 
+    console.log("Server has started on post "+PORT); 
 });
