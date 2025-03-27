@@ -18,6 +18,6 @@ const promptSchema = new mongoose.Schema({
     timestamps: true, // contains created at and updated at
 });
 
-const Prompt = mongoose.model('Prompt', promptSchema);
+const Prompt = mongoose.model('Prompt', promptSchema); // mongoose will aoutomatically make it something like this : prompts as a collection so use captitalized singular version
 
 export default Prompt;
