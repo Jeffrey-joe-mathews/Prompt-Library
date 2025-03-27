@@ -4,6 +4,7 @@ import { connectDB } from './config/db.js';
 
 import dotenv from 'dotenv';
 import Prompt from './models/prompt.model.js';
+import mongoose, { Mongoose } from 'mongoose';
 dotenv.config();
 
 const app = express(); // creating an instance of express
@@ -73,7 +74,37 @@ app.post('/api/prompts', async(req, res) => {
 }) 
 
 app.put('/api/prompts/:id', async(req, res) => {
-    
+    const {id} = req.params;
+    const prompt = req.body;
+
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+        res.status(404).json(
+            {
+                "success" : false,
+                "message" : "unable to PUT as the id appears tyo be non exixtent... TO BE OR NOT TO BE THAT IS THE QUESTION"
+            }
+        )
+    }
+
+    try {
+        const updatedPrompt = await Prompt.findByIdAndUpdate(id, prompt, {new : true});
+        res.status(200).json(
+            {
+                "success" : true,
+                "data" : updatedPrompt
+            }
+        );
+    }
+    catch (error) {
+        console.error("Unable to PUT(update) product");
+        res.status(500).json(
+            {
+                "success" : false,
+                "message" : "unable to update the prompt.. somethging seems to be wrong"
+            }
+        );
+    }
+
 })
 
 app.delete('/api/prompts/:id', async(req, res) => {
