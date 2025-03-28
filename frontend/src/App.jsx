@@ -4,8 +4,10 @@ import CreatePage from "./pages/CreatePage"
 import HomePage from "./pages/HomePage"
 import Navbar from "./components/Navbar"
 import { useColorModeValue } from "./components/ui/color-mode"
+import { usePromptLibrary } from "./store/prompt"
 
 function App() {
+
 
   return (
     <Box minH={"100vh"}  bg={useColorModeValue("gray.200", "gray.900")} >
