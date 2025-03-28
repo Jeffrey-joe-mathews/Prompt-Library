@@ -24,10 +24,12 @@ export const getPrompt = async(req, res) => {
 
 export const postPrompt = async(req, res) => {
     const item = req.body;
+    console.log(`recieved item : ${item}`);
+    
 
     // if one of  the required data is not priovided
     if (!item.name || !item.image || !item.prompt) {
-        res.status(400).json (
+        return res.status(400).json (
             {
                 "success" : false,
                 "message" : "please provide all the fields",
@@ -55,7 +57,6 @@ export const postPrompt = async(req, res) => {
             res.status(500).json(
                 {
                     "success" : false,
-                    "data" : newItem,
                     "message" : "Server error please try again later"
                 }
             );

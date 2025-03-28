@@ -1,7 +1,7 @@
 import { Box, Button, Container, Heading, Input, VStack } from '@chakra-ui/react'
 import React, { useState } from 'react'
 import { useColorModeValue } from '../components/ui/color-mode'
-import { usePromptLibrary } from '../store/prompt'
+import { usePromptLibrary } from '../store/prompt.js'
 
 const CreatePage = () => {
 
@@ -13,11 +13,12 @@ const CreatePage = () => {
     }
   )
 
-  const handleAddPrompt = () => {
+  const handleAddPrompt = async() => {
     console.log(newPrompt);
-    createPrompt (
-      
-    )
+    const { success, message } = await createPrompt ( newPrompt );
+    console.log(
+      `success : ${success}\nmessage : ${message}`
+    );
   }
 
   const { createPrompt } = usePromptLibrary();

@@ -13,11 +13,22 @@ export const usePromptLibrary = create((set) => ({
         const res = await fetch("/api/prompts", {
             method: "POST",
             headers : {
-                "Content-Type" : "application.json"
+                "Content-Type" : "application/json"
             },
             body: JSON.stringify(newPrompt)
         })
+        if (!res.ok) {
+        const errorData = await res.json();
+        return {
+            success: false,
+            message: errorData.message || "Something went wrong"
+            };
+        }
         const data = await res.json();
-        set((state) => ({prompt:[...state.prompt, data.data]}))
+        set((state) => ({prompts:[...state.prompts, data.data]}));
+        return {
+            "success" : true,
+            "message" : "The Prompt has been created... Thank You ^w^"
+        }
     }
 })) 
