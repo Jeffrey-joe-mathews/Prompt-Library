@@ -30,5 +30,10 @@ export const usePromptLibrary = create((set) => ({
             "success" : true,
             "message" : "The Prompt has been created... Thank You ^w^"
         }
+    },
+    fetchPrompt: async () => {
+        const res = await fetch("/api/prompts");
+        const data = await res.json();
+        set({ prompts:data.data });
     }
 })) 

@@ -13,12 +13,36 @@ const CreatePage = () => {
     }
   )
 
+  const [message, setMessage] = useState(
+    {
+      type : "",
+      text : "",
+    }
+  )
+
+  const showMessage = (type, text) => {
+    setMessage({
+      type:type,
+      text:text,
+    });
+    setTimeout(() => {
+      setMessage({type:"", text:""})
+    }, 5000);
+  };
+
   const handleAddPrompt = async() => {
     console.log(newPrompt);
     const { success, message } = await createPrompt ( newPrompt );
     console.log(
       `success : ${success}\nmessage : ${message}`
     );
+    if(success) {
+      showMessage("success", "Your prompt has been created successfully");
+      setNewPrompt({name:"", prompt:"", image:""});
+    }
+    else {
+      showMessage("error", "There was an issue creating your prompt");
+    }
   }
 
   const { createPrompt } = usePromptLibrary();
@@ -33,6 +57,19 @@ const CreatePage = () => {
         <Heading as={'h1'} size={'2xl'} textAlign={"center"} marginBottom={'8'} >
           Create a Prompt
         </Heading>
+        {message.text && (
+          <Box
+            bg={message.type === 'success' ? 'green.500' : 'red.800'}
+            color="white"
+            p={4}
+            rounded="md"
+            textAlign="center"
+            mb={4}
+            transition="opacity 0.5s ease-out"
+          >
+            {message.text}
+          </Box>
+        )}
         <Box
           w={'full'}
           bg={useColorModeValue("white", "grey.800")}
