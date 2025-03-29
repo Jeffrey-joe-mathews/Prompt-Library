@@ -76,5 +76,24 @@ export const usePromptLibrary = create((set) => ({
         "success" : true,
         "message" : data.message
      }
-    }
+    },
+    updatePrompt: async(id, updatedPrompt) => {
+        const res = await fetch(`/api/prompts/${id}`, {
+            method: 'PUT',
+            headers: {
+                "Content-Type" : "application/json",
+            },
+            body : JSON.stringify(updatedPrompt)
+        })
+        const data = await res.json();
+        set(state => ({
+            // update ui without needing a refresh
+            prompts : state.prompts.map(prompt => prompt._id === id ? data.data : product),
+
+        }));
+        return {
+            'success' : true,
+            'message' : data.message
+        }
+    },
 }))
