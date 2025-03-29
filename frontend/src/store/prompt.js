@@ -31,9 +31,36 @@ export const usePromptLibrary = create((set) => ({
             "message" : "The Prompt has been created... Thank You ^w^"
         }
     },
+    
     fetchPrompt: async () => {
-        const res = await fetch("/api/prompts");
-        const data = await res.json();
-        set({ prompts:data.data });
-    }
+        try {
+            // Make the API request to fetch prompts
+            const res = await fetch("/api/prompts");
+
+            if (!res.ok) {
+                // Handle the case when response is not OK
+                const errorData = await res.json();
+                return {
+                    success: false,
+                    message: errorData.message || "Failed to fetch prompts",
+                };
+            }
+
+            // Parse the response data
+            const data = await res.json();
+            // Update the state with fetched prompts
+            set({ prompts: data.data });
+
+            return {
+                success: true,
+                message: "Prompts fetched successfully",
+            };
+        } catch (error) {
+            // Handle any unexpected errors
+            return {
+                success: false,
+                message: "An error occurred while fetching prompts",
+            };
+        }
+    },
 })) 
