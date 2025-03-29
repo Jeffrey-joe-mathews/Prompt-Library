@@ -1,9 +1,14 @@
-import { Box, Button, Heading, Icon, IconButton, Image, HStack } from '@chakra-ui/react'
+import { Box, Button, Heading, Icon, Image, HStack } from '@chakra-ui/react'
 import React from 'react'
 import { FaEdit } from "react-icons/fa";
 import { MdDelete } from "react-icons/md";
+import { useColorModeValue } from './ui/color-mode';
 
 const PromptCard = ({prompt}) => {
+
+    const textColor = useColorModeValue("gray.600", "gray.200");
+    const bg = useColorModeValue("white", "gray.800");
+
   return (
     <Box
         shadow={'lg'}
@@ -11,6 +16,7 @@ const PromptCard = ({prompt}) => {
         overflow={'hidden'}
         transition={'all 0.3s'}
         _hover={{transform:'translateY(-5px)', shadow:'xl'}}
+        bg={bg}
     >
         <Image 
             src={prompt.image} 
@@ -26,18 +32,20 @@ const PromptCard = ({prompt}) => {
             color="white"
         >{prompt.prompt}</Box>
         <Box p={4} >
-            <Heading as={'h3'} size={'md'} mb={'2'} >
+            <Heading as={'h3'} size={'md'} mb={'2'} color={textColor} >
                 {prompt.name}
             </Heading>
         </Box>
         <HStack spacing={2} >
-            <Button onClick={onOpen} >
-              <Icon color={'blue'}>
+            <Button background={'blue.700'} >
+            {/* <Button onClick={onOpen} > */}
+              <Icon>
                 <FaEdit />
               </Icon>
             </Button>
-            <Button onClick={() => handleDelete(prompt._id)} >
-                <Icon color={'red'} >
+            <Button background={'red.700'} >
+            {/* <Button onClick={() => handleDelete(prompt._id)} > */}
+                <Icon  >
                     < MdDelete />
                 </Icon>
             </Button>

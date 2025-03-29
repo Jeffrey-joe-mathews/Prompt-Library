@@ -50,7 +50,8 @@ const HomePage = () => {
           ))}
         </SimpleGrid>
 
-        <div
+        {prompts.length === 0 && (
+          <div
           style={{
             fontSize: 'xl',
             fontWeight: 'bold',
@@ -72,6 +73,8 @@ const HomePage = () => {
         </span>
         </Link>
         </div>
+        )}
+
       </VStack>
     </Container>
   )
