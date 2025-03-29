@@ -3,11 +3,16 @@ import React from 'react'
 import { FaEdit } from "react-icons/fa";
 import { MdDelete } from "react-icons/md";
 import { useColorModeValue } from './ui/color-mode';
+import { usePromptLibrary } from '../store/prompt';
 
 const PromptCard = ({prompt}) => {
 
     const textColor = useColorModeValue("gray.600", "gray.200");
     const bg = useColorModeValue("white", "gray.800");
+    const { deletePrompt } = usePromptLibrary();
+    const handleDelete = async(pid) => {
+        const { success, message } = await deletePrompt(pid);
+    }
 
   return (
     <Box
@@ -43,7 +48,7 @@ const PromptCard = ({prompt}) => {
                 <FaEdit />
               </Icon>
             </Button>
-            <Button background={'red.700'} >
+            <Button  onClick={() => handleDelete(prompt._id)} background={'red.700'} >
             {/* <Button onClick={() => handleDelete(prompt._id)} > */}
                 <Icon  >
                     < MdDelete />

@@ -31,7 +31,6 @@ export const usePromptLibrary = create((set) => ({
             "message" : "The Prompt has been created... Thank You ^w^"
         }
     },
-    
     fetchPrompt: async () => {
         try {
             // Make the API request to fetch prompts
@@ -63,4 +62,19 @@ export const usePromptLibrary = create((set) => ({
             };
         }
     },
-})) 
+    deletePrompt: async (id) => {
+        const res = await fetch(`api/prompts/${id}`, { 
+            method: "DELETE",
+        })
+    const data = await res.json();
+    if(!data.success) return { 
+        "success" : data.success,
+        "message" : data.message
+     };
+     set(state => ({ "prompts" : state.prompts.filter( prompt => prompt._id !== id ) }))
+     return {
+        "success" : true,
+        "message" : data.message
+     }
+    }
+}))
