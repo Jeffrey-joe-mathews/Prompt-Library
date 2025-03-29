@@ -45,11 +45,11 @@ const Navbar = () => {
                 <CiSquarePlus />
               </Icon>
             </Button>
+          </Link>
 
             <Button onClick={toggleColorMode} >
               {colorMode ==="light"? <FaCloudMoon /> : < FaCloudSun size={40} /> }
             </Button>
-          </Link>
         </HStack>
       </Flex>
     </Container>

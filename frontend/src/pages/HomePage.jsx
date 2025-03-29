@@ -2,6 +2,7 @@ import { Container, SimpleGrid, VStack } from '@chakra-ui/react'
 import { Link } from 'react-router-dom'
 import React, { useEffect } from 'react'
 import { usePromptLibrary } from '../store/prompt.js'
+import PromptCard from '../components/PromptCard.jsx'
 
 const HomePage = () => {
   
@@ -44,7 +45,9 @@ const HomePage = () => {
           spacing={10}
           w={'full'}
         >
-
+          {prompts.map((prompt) => (
+            <PromptCard key={prompt._id} prompt={prompt} />
+          ))}
         </SimpleGrid>
 
         <div
